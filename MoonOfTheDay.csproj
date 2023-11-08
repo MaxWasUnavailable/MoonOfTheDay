@@ -22,10 +22,15 @@
 
     <ItemGroup>
         <Reference Include="Assembly-CSharp">
-            <HintPath>E:\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Assembly-CSharp.dll</HintPath>
+            <HintPath>./Dependencies/Assembly-CSharp.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine">
-            <HintPath>E:\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.dll</HintPath>
+            <HintPath>./Dependencies/UnityEngine.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.TextMeshPro">
+            <HintPath>./Dependencies/Unit.TextMeshPro.dll</HintPath>
         </Reference>
     </ItemGroup>
+    
+
 </Project>
