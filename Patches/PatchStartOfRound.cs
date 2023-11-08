@@ -13,7 +13,7 @@ public class PatchStartOfRound
         __instance.overrideSeedNumber = 123456789;
     }
     
-    [HarmonyPatch("StartGame")]
+    [HarmonyPatch("SetMapScreenInfoToCurrentLevel")]
     [HarmonyPostfix]
     public static void SetScreenLevelDescription(StartOfRound __instance)
     {
