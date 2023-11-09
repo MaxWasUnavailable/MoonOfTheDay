@@ -16,10 +16,10 @@ public class PatchStartOfRound
         switch (Plugin.Instance.SelectedMoonType)
         {
             case MoonType.Daily:
-                __instance.overrideSeedNumber = Plugin.Instance.GetDailySeed();
+                __instance.overrideSeedNumber = Plugin.GetDailySeed();
                 break;
             case MoonType.Weekly:
-                __instance.overrideSeedNumber = Plugin.Instance.GetWeeklySeed();
+                __instance.overrideSeedNumber = Plugin.GetWeeklySeed();
                 break;
             default:
                 Plugin.Logger.LogWarning($"Unknown moon type: {Plugin.Instance.SelectedMoonType}");

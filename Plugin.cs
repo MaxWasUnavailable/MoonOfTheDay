@@ -75,7 +75,7 @@ public class Plugin : BaseUnityPlugin
     /// Generate a seed based on the day.
     /// </summary>
     /// <returns> Seed </returns>
-    public int GetDailySeed()
+    public static int GetDailySeed()
     {
         return (int) (DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalDays;
     }
@@ -84,7 +84,7 @@ public class Plugin : BaseUnityPlugin
     /// Generate a seed based on the week.
     /// </summary>
     /// <returns> Seed </returns>
-    public int GetWeeklySeed()
+    public static int GetWeeklySeed()
     {
         var day = (int) (DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalDays;
         return (int) Math.Floor((float) day / 7);
