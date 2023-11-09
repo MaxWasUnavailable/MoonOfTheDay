@@ -1,6 +1,15 @@
-﻿using HarmonyLib;
+﻿using System.Linq;
+using HarmonyLib;
 
 namespace MoonOfTheDay.Patches;
+
+public static class PatchStartOfRoundHelpers
+{
+    public static bool IsVanillaMoon(SelectableLevel moon)
+    {
+        return !new [] {Plugin.DailyMoonName, Plugin.WeeklyMoonName}.Contains(moon.PlanetName);
+    }
+}
 
 [HarmonyPatch(typeof(StartOfRound))]
 public class PatchStartOfRound
