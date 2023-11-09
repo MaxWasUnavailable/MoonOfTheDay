@@ -1,4 +1,5 @@
-﻿using BepInEx;
+﻿using System;
+using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
 
@@ -68,5 +69,24 @@ public class Plugin : BaseUnityPlugin
         _isPatched = false;
 
         Logger.LogDebug("Unpatched!");
+    }
+    
+    /// <summary>
+    /// Generate a seed based on the day.
+    /// </summary>
+    /// <returns> Seed </returns>
+    public int GetDailySeed()
+    {
+        return (int) (DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalDays;
+    }
+    
+    /// <summary>
+    /// Generate a seed based on the week.
+    /// </summary>
+    /// <returns> Seed </returns>
+    public int GetWeeklySeed()
+    {
+        var day = (int) (DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalDays;
+        return (int) Math.Floor((float) day / 7);
     }
 }
