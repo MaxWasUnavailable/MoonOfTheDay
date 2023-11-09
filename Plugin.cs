@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
@@ -10,6 +11,7 @@ public class Plugin : BaseUnityPlugin
 {
     public const string DailyMoonName = "Daily Moon";
     public const string WeeklyMoonName = "Weekly Moon";
+    public static int HighestLevelID { get; private set; } = -1;
     internal new static ManualLogSource Logger;
 
     private Harmony _harmony;
@@ -82,9 +84,20 @@ public class Plugin : BaseUnityPlugin
         var day = (int)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalDays;
         return (int)Math.Floor((float)day / 7);
     }
+    
+    public static void SetHighestLevelID(SelectableLevel[] moons)
+    {
+        if (HighestLevelID != -1) return;
+        
+        HighestLevelID = moons.Max(moon => moon.levelID);
+        
+        Logger.LogInfo($"Highest vanilla level ID is {HighestLevelID}");
+    }
 
     public static SelectableLevel GetDailyMoon(SelectableLevel[] moons)
     {
+        SetHighestLevelID(moons);
+        
         var random = new Random(GetDailySeed());
 
         var dailyMoon = moons[random.Next(0, moons.Length)];
@@ -95,13 +108,15 @@ public class Plugin : BaseUnityPlugin
         dailyMoon.PlanetName = DailyMoonName;
         dailyMoon.LevelDescription = "This moon looks familiar...";
         dailyMoon.riskLevel = "???";
-        dailyMoon.levelID = 999;
+        dailyMoon.levelID = HighestLevelID + 1;
 
         return dailyMoon;
     }
 
     public static SelectableLevel GetWeeklyMoon(SelectableLevel[] moons)
     {
+        SetHighestLevelID(moons);
+        
         var random = new Random(GetWeeklySeed());
 
         var weeklyMoon = moons[random.Next(0, moons.Length)];
@@ -112,7 +127,7 @@ public class Plugin : BaseUnityPlugin
         weeklyMoon.PlanetName = WeeklyMoonName;
         weeklyMoon.LevelDescription = "This moon looks familiar...";
         weeklyMoon.riskLevel = "???";
-        weeklyMoon.levelID = 998;
+        weeklyMoon.levelID = HighestLevelID + 2;
 
         return weeklyMoon;
     }
