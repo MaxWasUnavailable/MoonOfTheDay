@@ -5,6 +5,9 @@ using Random = System.Random;
 
 namespace MoonOfTheDay.Patches;
 
+/// <summary>
+///     Helper methods for the RoundManager patch
+/// </summary>
 public static class PatchRoundManagerHelpers
 {
     public static Vector3 SeededInsideUnitSphere(ref Random random)
@@ -15,6 +18,14 @@ public static class PatchRoundManagerHelpers
     }
 }
 
+/// <summary>
+///     Patches for the RoundManager class
+///
+///     Makes both GetRandomNavMeshPositionInRadius and GetRandomNavMeshPositionInRadiusSpherical use a deterministic
+///     random number generator from the RoundManager instance instead of Unity's default random number generator.
+///
+///     This allows for the seed to impact the spawn location of loot and enemies.
+/// </summary>
 [HarmonyPatch(typeof(RoundManager))]
 public class PatchRoundManager
 {
