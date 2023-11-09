@@ -89,4 +89,14 @@ public class Plugin : BaseUnityPlugin
         var day = (int) (DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalDays;
         return (int) Math.Floor((float) day / 7);
     }
+
+    public static SelectableLevel GetDailyMoon()
+    {
+        return null;
+    }
+    
+    public static SelectableLevel GetWeeklyMoon()
+    {
+        return null;
+    }
 }
