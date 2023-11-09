@@ -4,6 +4,13 @@ using HarmonyLib;
 
 namespace MoonOfTheDay;
 
+public enum MoonType
+{
+    Normal,
+    Daily,
+    Weekly
+}
+
 [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
 public class Plugin : BaseUnityPlugin
 {
@@ -12,6 +19,8 @@ public class Plugin : BaseUnityPlugin
     private Harmony _harmony;
     private bool _isPatched;
     public static Plugin Instance { get; private set; }
+    
+    public MoonType SelectedMoonType { get; internal set; } = MoonType.Normal;
 
     private void Awake()
     {
