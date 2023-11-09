@@ -20,7 +20,7 @@ public class Plugin : BaseUnityPlugin
     private Harmony _harmony;
     private bool _isPatched;
     public static Plugin Instance { get; private set; }
-    
+
     public MoonType SelectedMoonType { get; internal set; } = MoonType.Normal;
 
     private void Awake()
@@ -70,33 +70,60 @@ public class Plugin : BaseUnityPlugin
 
         Logger.LogDebug("Unpatched!");
     }
-    
+
     /// <summary>
-    /// Generate a seed based on the day.
+    ///     Generate a seed based on the day.
     /// </summary>
     /// <returns> Seed </returns>
     public static int GetDailySeed()
     {
-        return (int) (DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalDays;
+        return (int)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalDays;
     }
-    
+
     /// <summary>
-    /// Generate a seed based on the week.
+    ///     Generate a seed based on the week.
     /// </summary>
     /// <returns> Seed </returns>
     public static int GetWeeklySeed()
     {
-        var day = (int) (DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalDays;
-        return (int) Math.Floor((float) day / 7);
+        var day = (int)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalDays;
+        return (int)Math.Floor((float)day / 7);
+    }
+
+    private static SelectableLevel[] GetAllLevels()
+    {
+        return FindObjectsOfType<SelectableLevel>();
     }
 
     public static SelectableLevel GetDailyMoon()
     {
-        return null;
+        var random = new Random(GetDailySeed());
+        var dailyMoon = GetAllLevels()[random.Next(0, GetAllLevels().Length)];
+
+        // Copy the moon to prevent reference issues
+        dailyMoon = Instantiate(dailyMoon);
+
+        dailyMoon.PlanetName = "Daily Moon PlanetName";
+        dailyMoon.LevelDescription = "This moon looks familiar...";
+        dailyMoon.riskLevel = "???";
+        dailyMoon.levelID = 999;
+
+        return dailyMoon;
     }
-    
+
     public static SelectableLevel GetWeeklyMoon()
     {
-        return null;
+        var random = new Random(GetWeeklySeed());
+        var weeklyMoon = GetAllLevels()[random.Next(0, GetAllLevels().Length)];
+
+        // Copy the moon to prevent reference issues
+        weeklyMoon = Instantiate(weeklyMoon);
+
+        weeklyMoon.PlanetName = "Weekly Moon PlanetName";
+        weeklyMoon.LevelDescription = "This moon looks familiar...";
+        weeklyMoon.riskLevel = "???";
+        weeklyMoon.levelID = 999;
+
+        return weeklyMoon;
     }
 }
