@@ -9,14 +9,45 @@ public class PatchStartOfRound
     [HarmonyPrefix]
     public static void SetSeed(StartOfRound __instance)
     {
+        if (Plugin.Instance.SelectedMoonType == MoonType.Normal) return;
+        
         __instance.overrideRandomSeed = true;
-        __instance.overrideSeedNumber = 123456789;
+        
+        switch (Plugin.Instance.SelectedMoonType)
+        {
+            case MoonType.Daily:
+                __instance.overrideSeedNumber = Plugin.Instance.GetDailySeed();
+                break;
+            case MoonType.Weekly:
+                __instance.overrideSeedNumber = Plugin.Instance.GetWeeklySeed();
+                break;
+            default:
+                Plugin.Logger.LogWarning($"Unknown moon type: {Plugin.Instance.SelectedMoonType}");
+                return;
+        }
     }
     
     [HarmonyPatch("SetMapScreenInfoToCurrentLevel")]
     [HarmonyPostfix]
     public static void SetScreenLevelDescription(StartOfRound __instance)
     {
-        __instance.screenLevelDescription.text = "Moon of the Day";
+        if (Plugin.Instance.SelectedMoonType == MoonType.Normal) return;
+
+        string text;
+
+        switch (Plugin.Instance.SelectedMoonType)
+        {
+            case MoonType.Daily:
+                text = "Daily Moon";
+                break;
+            case MoonType.Weekly:
+                text = "Weekly Moon";
+                break;
+            default:
+                Plugin.Logger.LogWarning($"Unknown moon type: {Plugin.Instance.SelectedMoonType}");
+                return;
+        }
+        
+        __instance.screenLevelDescription.text = text;
     }
 }
