@@ -19,6 +19,11 @@ public class PatchTerminal
 
         moonList.RemoveAll(moon => moon.PlanetName == dailyMoon.PlanetName);
         moonList.RemoveAll(moon => moon.PlanetName == weeklyMoon.PlanetName);
+        
+        var highestId = moonList.Max(moon => moon.levelID);
+        
+        dailyMoon.levelID = highestId + 1;
+        weeklyMoon.levelID = highestId + 2;
 
         moonList.Add(dailyMoon);
         moonList.Add(weeklyMoon);
