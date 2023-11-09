@@ -90,15 +90,11 @@ public class Plugin : BaseUnityPlugin
         return (int)Math.Floor((float)day / 7);
     }
 
-    private static SelectableLevel[] GetAllLevels()
-    {
-        return FindObjectsOfType<SelectableLevel>();
-    }
-
-    public static SelectableLevel GetDailyMoon()
+    public static SelectableLevel GetDailyMoon(SelectableLevel[] moons)
     {
         var random = new Random(GetDailySeed());
-        var dailyMoon = GetAllLevels()[random.Next(0, GetAllLevels().Length)];
+        
+        var dailyMoon = moons[random.Next(0, moons.Length)];
 
         // Copy the moon to prevent reference issues
         dailyMoon = Instantiate(dailyMoon);
@@ -111,10 +107,11 @@ public class Plugin : BaseUnityPlugin
         return dailyMoon;
     }
 
-    public static SelectableLevel GetWeeklyMoon()
+    public static SelectableLevel GetWeeklyMoon(SelectableLevel[] moons)
     {
         var random = new Random(GetWeeklySeed());
-        var weeklyMoon = GetAllLevels()[random.Next(0, GetAllLevels().Length)];
+        
+        var weeklyMoon = moons[random.Next(0, moons.Length)];
 
         // Copy the moon to prevent reference issues
         weeklyMoon = Instantiate(weeklyMoon);
@@ -122,7 +119,7 @@ public class Plugin : BaseUnityPlugin
         weeklyMoon.PlanetName = "Weekly Moon PlanetName";
         weeklyMoon.LevelDescription = "This moon looks familiar...";
         weeklyMoon.riskLevel = "???";
-        weeklyMoon.levelID = 999;
+        weeklyMoon.levelID = 998;
 
         return weeklyMoon;
     }
