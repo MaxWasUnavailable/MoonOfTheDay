@@ -10,7 +10,7 @@ public class PatchTerminal
     [HarmonyPostfix]
     public static void InsertMoons(Terminal __instance)
     {
-        Plugin.Logger.LogDebug("Inserting moons...");
+        Plugin.Logger.LogInfo("Inserting moons...");
 
         var dailyMoon = Plugin.GetDailyMoon(__instance.moonsCatalogueList);
         var weeklyMoon = Plugin.GetWeeklyMoon(__instance.moonsCatalogueList);
