@@ -1,8 +1,19 @@
 ﻿using HarmonyLib;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = System.Random;
 
 namespace MoonOfTheDay.Patches;
+
+public static class PatchRoundManagerHelpers
+{
+    public static Vector3 SeededInsideUnitSphere(ref Random random)
+    {
+        return new Vector3((float)(random.NextDouble() * 2 - 1),
+            (float)(random.NextDouble() * 2 - 1),
+            (float)(random.NextDouble() * 2 - 1));
+    }
+}
 
 [HarmonyPatch(typeof(RoundManager))]
 public class PatchRoundManager
@@ -13,10 +24,7 @@ public class PatchRoundManager
         Vector3 pos, float radius = 10f,
         NavMeshHit navHit = default)
     {
-        var randomVector = new Vector3((float)(__instance.LevelRandom.NextDouble() * 2 - 1),
-            (float)(__instance.LevelRandom.NextDouble() * 2 - 1),
-            (float)(__instance.LevelRandom.NextDouble() * 2 - 1));
-        pos = randomVector * radius + pos;
+        pos = PatchRoundManagerHelpers.SeededInsideUnitSphere(ref __instance.LevelRandom) * radius + pos;
         __result = NavMesh.SamplePosition(pos, out navHit, radius, -1) ? navHit.position : pos;
         return false;
     }
@@ -27,11 +35,8 @@ public class PatchRoundManager
         float radius = 10f,
         NavMeshHit navHit = default)
     {
-        var randomVector = new Vector3((float)(__instance.LevelRandom.NextDouble() * 2 - 1),
-            (float)(__instance.LevelRandom.NextDouble() * 2 - 1),
-            (float)(__instance.LevelRandom.NextDouble() * 2 - 1));
         var y = pos.y;
-        pos = randomVector * radius + pos;
+        pos = PatchRoundManagerHelpers.SeededInsideUnitSphere(ref __instance.LevelRandom) * radius + pos;
         pos.y = y;
         if (NavMesh.SamplePosition(pos, out navHit, radius, -1))
         {
