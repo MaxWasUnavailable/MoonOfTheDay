@@ -37,7 +37,7 @@ public class PatchTerminal
         __instance.moonsCatalogueList = moonList.ToArray();
         startOfRound.levels = levelList.ToArray();
 
-        if (__instance.terminalNodes.allKeywords.Any(keyword => keyword.word == "KW" + Plugin.DailyMoonName.Replace(" ", "-"))) // TODO: This is dirty, the KW name needs to not be hardcoded / better solution must be found.
+        if (__instance.terminalNodes.allKeywords.Any(keyword => keyword.name == "KW" + Plugin.DailyMoonName.Replace(" ", "-"))) // TODO: This is dirty, the KW name needs to not be hardcoded / better solution must be found.
         {
             Plugin.Logger.LogInfo("Terminal nodes have already been modified.");
             return;
