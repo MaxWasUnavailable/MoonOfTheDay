@@ -12,30 +12,29 @@ public class PatchTerminal
     [HarmonyPostfix]
     public static void InsertMoons(Terminal __instance)
     {
-        Plugin.Logger.LogInfo("Inserting moons...");
-
-        var startOfRound = StartOfRound.Instance;
+        Plugin.Logger.LogInfo("Inserting moons in Terminal...");
 
         var dailyMoon = Plugin.GetDailyMoon(__instance.moonsCatalogueList);
         var weeklyMoon = Plugin.GetWeeklyMoon(__instance.moonsCatalogueList);
 
         var moonList = __instance.moonsCatalogueList.ToList();
-        var levelList = startOfRound.levels.ToList();
 
+        // Remove first to prevent potential issues with duplicate moons
         moonList.RemoveAll(moon => moon.PlanetName == dailyMoon.PlanetName);
         moonList.RemoveAll(moon => moon.PlanetName == weeklyMoon.PlanetName);
-
-        levelList.RemoveAll(level => level.PlanetName == dailyMoon.PlanetName);
-        levelList.RemoveAll(level => level.PlanetName == weeklyMoon.PlanetName);
 
         moonList.Add(dailyMoon);
         moonList.Add(weeklyMoon);
 
-        levelList.Add(dailyMoon);
-        levelList.Add(weeklyMoon);
-
         __instance.moonsCatalogueList = moonList.ToArray();
-        startOfRound.levels = levelList.ToArray();
+    }
+    
+    [HarmonyPatch("Awake")]
+    [HarmonyPostfix]
+    public static void AddTerminalCommands(Terminal __instance)
+    {
+        var dailyMoon = Plugin.GetDailyMoon(__instance.moonsCatalogueList);
+        var weeklyMoon = Plugin.GetWeeklyMoon(__instance.moonsCatalogueList);
 
         if (__instance.terminalNodes.allKeywords.Any(keyword => keyword.name == "KW" + Plugin.DailyMoonName.Replace(" ", "-"))) // TODO: This is dirty, the KW name needs to not be hardcoded / better solution must be found.
         {
@@ -127,11 +126,5 @@ public class PatchTerminal
         __instance.terminalNodes.allKeywords.First(keyword => keyword.name == "Moons").specialKeywordResult
                 .displayText +=
             "* " + Plugin.DailyMoonName + " [planetTime]\n* " + Plugin.WeeklyMoonName + " [planetTime]\n\n";
-
-
-        // Part of this can be moved to a StartOfRound patch -- Do need to ensure both lists are in sync
-        //  --> Possibly set them both at StartOfRound Awake instead?
-        //  --> Potential issues when removing & re-adding moon while at said moon?
-        // Need to extract duplicated code to a helper method
     }
 }
