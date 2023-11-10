@@ -99,8 +99,8 @@ public class Plugin : BaseUnityPlugin
         SetHighestLevelID(moons);
 
         var random = new Random(GetDailySeed());
-
-        var dailyMoon = moons[random.Next(0, moons.Length)];
+        
+        var dailyMoon = moons.OrderBy(moon => moon.levelID).ToArray()[random.Next(0, moons.Length)];
 
         // Copy the moon to prevent reference issues
         dailyMoon = Instantiate(dailyMoon);
@@ -129,7 +129,7 @@ public class Plugin : BaseUnityPlugin
 
         var random = new Random(GetWeeklySeed());
 
-        var weeklyMoon = moons[random.Next(0, moons.Length)];
+        var weeklyMoon = moons.OrderBy(moon => moon.levelID).ToArray()[random.Next(0, moons.Length)];
 
         // Copy the moon to prevent reference issues
         weeklyMoon = Instantiate(weeklyMoon);
