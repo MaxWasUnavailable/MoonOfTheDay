@@ -35,4 +35,27 @@ public class PatchStartOfRound
                 break;
         }
     }
+    
+    [HarmonyPatch("Awake")]
+    [HarmonyPostfix]
+    public static void InsertMoons(StartOfRound __instance)
+    {
+        Plugin.Logger.LogInfo("Inserting moons in StartOfRound...");
+
+        var startOfRound = StartOfRound.Instance;
+        
+        var levelList = startOfRound.levels.ToList();
+        
+        var dailyMoon = Plugin.GetDailyMoon(startOfRound.levels);
+        var weeklyMoon = Plugin.GetWeeklyMoon(startOfRound.levels);
+
+        // Remove first to prevent potential issues with duplicate moons
+        levelList.RemoveAll(level => level.PlanetName == dailyMoon.PlanetName);
+        levelList.RemoveAll(level => level.PlanetName == weeklyMoon.PlanetName);
+
+        levelList.Add(dailyMoon);
+        levelList.Add(weeklyMoon);
+
+        startOfRound.levels = levelList.ToArray();
+    }
 }
