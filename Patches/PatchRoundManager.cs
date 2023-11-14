@@ -3,6 +3,10 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = System.Random;
 
+// ReSharper disable RedundantAssignment
+// ReSharper disable InconsistentNaming
+#pragma warning disable Harmony003
+
 namespace MoonOfTheDay.Patches;
 
 /// <summary>
@@ -20,10 +24,8 @@ public static class PatchRoundManagerHelpers
 
 /// <summary>
 ///     Patches for the RoundManager class
-///
 ///     Makes both GetRandomNavMeshPositionInRadius and GetRandomNavMeshPositionInRadiusSpherical use a deterministic
 ///     random number generator from the RoundManager instance instead of Unity's default random number generator.
-///
 ///     This allows for the seed to impact the spawn location of loot and enemies.
 /// </summary>
 [HarmonyPatch(typeof(RoundManager))]
