@@ -1,7 +1,7 @@
 # Moon Of The Day
-> <p align="center">
->   <img src="Images/MoonOfTheDay.png" alt="MoonOfTheDay.png">
-> </p>
+<p align="center">
+  <img src="Images/MoonOfTheDay.png" alt="MoonOfTheDay.png">
+</p>
 
 This mod adds a concept you can find in similar "run-based" games: **seeded dailies & weeklies**.
 
