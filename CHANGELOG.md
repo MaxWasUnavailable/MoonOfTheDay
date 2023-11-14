@@ -6,3 +6,6 @@
 
 # 1.0.2
 + Fix images in README.md for Thunderstore
+
+# 1.0.3
++ Add BepInEx 5 notice

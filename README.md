@@ -9,6 +9,8 @@ All players that use this mod will have the **exact same** moon, with the exact 
 
 Note that currently, the moons and weathers are pulled from the base game (e.g. no new *content* is added - this is strictly a game mechanic mod). Any mods that add to the pool of moons, weather, scrap, and enemies *will* cause you to have a different experience than other players.
 
+> **Note that this mod uses BepInEx 5**
+
 ## New moons
 
 *The company has detected some new rogue moons in the system. A temporary license has been granted to explore them.*
