@@ -1,6 +1,6 @@
 # Moon Of The Day
 <p align="center">
-  <img src="Images/MoonOfTheDay.png" alt="MoonOfTheDay.png">
+  <img src="https://i.imgur.com/9NzB5Op.jpg" alt="MoonOfTheDay.png">
 </p>
 
 This mod adds a concept you can find in similar "run-based" games: **seeded dailies & weeklies**.
@@ -13,9 +13,9 @@ Note that currently, the moons and weathers are pulled from the base game (e.g. 
 
 *The company has detected some new rogue moons in the system. A temporary license has been granted to explore them.*
 
-![Images/Moons](Images/Moons.png)
+![Images/Moons](https://i.imgur.com/skMf8aC.png)
 
-![Images/ConfirmDeny](Images/ConfirmDeny.png)
+![Images/ConfirmDeny](https://i.imgur.com/oF9GwHJ.png)
 
 ## Unknown danger
 
@@ -23,9 +23,9 @@ You won't know what you find until you actually land on these moons. However, th
 
 Combinations that aren't possible in the base game are possible here... *and some of them are quite deadly.*
 
-![Images/LandingInfo](Images/LandingInfo.png)
+![Images/LandingInfo](https://i.imgur.com/M6Jixap.png)
 
-![Images/HazardLevel](Images/HazardLevel.png)
+![Images/HazardLevel](https://i.imgur.com/kcznKZn.png)
 
 ## GitHub repository
 
