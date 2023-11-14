@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BepInEx;
 using BepInEx.Logging;
@@ -15,7 +16,7 @@ public class Plugin : BaseUnityPlugin
 
     private Harmony _harmony;
     private bool _isPatched;
-    public static int HighestLevelID { get; private set; } = -1;
+    private static int HighestLevelID { get; set; } = -1;
     public static Plugin Instance { get; private set; }
 
     private void Awake()
@@ -85,7 +86,7 @@ public class Plugin : BaseUnityPlugin
         return (int)Math.Floor((float)day / 7);
     }
 
-    public static void SetHighestLevelID(SelectableLevel[] moons)
+    private static void SetHighestLevelID(IEnumerable<SelectableLevel> moons)
     {
         if (HighestLevelID != -1) return;
 
@@ -94,68 +95,46 @@ public class Plugin : BaseUnityPlugin
         Logger.LogInfo($"Highest vanilla level ID is {HighestLevelID}");
     }
 
-    public static SelectableLevel GetDailyMoon(SelectableLevel[] moons)
+    private static SelectableLevel GetCustomMoon(SelectableLevel[] moons, bool isDailyElseWeekly = true)
     {
         SetHighestLevelID(moons);
 
-        var random = new Random(GetDailySeed());
+        var random = new Random(isDailyElseWeekly ? GetDailySeed() : GetWeeklySeed());
 
         var moonsWithoutCompany = moons.Where(moon => moon.levelID != 3).ToArray();
 
-        var dailyMoon =
-            moonsWithoutCompany.OrderBy(moon => moon.levelID).ToArray()[random.Next(0, moonsWithoutCompany.Length)];
+        var moon =
+            Instantiate(
+                moonsWithoutCompany.OrderBy(moon => moon.levelID).ToArray()[
+                    random.Next(0, moonsWithoutCompany.Length)]);
 
-        // Copy the moon to prevent reference issues
-        dailyMoon = Instantiate(dailyMoon);
+        moon.name = isDailyElseWeekly ? DailyMoonName : WeeklyMoonName;
+        moon.PlanetName = isDailyElseWeekly ? DailyMoonName : WeeklyMoonName;
+        moon.LevelDescription = "This moon looks familiar...";
+        moon.riskLevel = "???";
+        moon.levelID = HighestLevelID + (isDailyElseWeekly ? 1 : 2);
 
-        dailyMoon.PlanetName = DailyMoonName;
-        dailyMoon.LevelDescription = "This moon looks familiar...";
-        dailyMoon.riskLevel = "???";
-        dailyMoon.levelID = HighestLevelID + 1;
-        
         // TODO: investigate RandomWeatherWithVariables --> variables might prevent complete flooding on some moons?
 
-        dailyMoon.randomWeathers = Array.Empty<RandomWeatherWithVariables>();
-        dailyMoon.overrideWeather = true;
+        moon.randomWeathers = Array.Empty<RandomWeatherWithVariables>();
+        moon.overrideWeather = true;
 
         var weatherOverride = Enum.GetValues(typeof(LevelWeatherType)).Cast<LevelWeatherType>().ToArray()[
             random.Next(0, Enum.GetValues(typeof(LevelWeatherType)).Length)];
 
-        dailyMoon.overrideWeatherType = weatherOverride;
-        dailyMoon.currentWeather = weatherOverride;
+        moon.overrideWeatherType = weatherOverride;
+        moon.currentWeather = weatherOverride;
 
+        return moon;
+    }
 
-        return dailyMoon;
+    public static SelectableLevel GetDailyMoon(SelectableLevel[] moons)
+    {
+        return GetCustomMoon(moons);
     }
 
     public static SelectableLevel GetWeeklyMoon(SelectableLevel[] moons)
     {
-        SetHighestLevelID(moons);
-
-        var random = new Random(GetWeeklySeed());
-
-        var moonsWithoutCompany = moons.Where(moon => moon.levelID != 3).ToArray();
-
-        var weeklyMoon =
-            moonsWithoutCompany.OrderBy(moon => moon.levelID).ToArray()[random.Next(0, moonsWithoutCompany.Length)];
-
-        // Copy the moon to prevent reference issues
-        weeklyMoon = Instantiate(weeklyMoon);
-
-        weeklyMoon.PlanetName = WeeklyMoonName;
-        weeklyMoon.LevelDescription = "This moon looks familiar...";
-        weeklyMoon.riskLevel = "???";
-        weeklyMoon.levelID = HighestLevelID + 2;
-
-        weeklyMoon.randomWeathers = Array.Empty<RandomWeatherWithVariables>();
-        weeklyMoon.overrideWeather = true;
-
-        var weatherOverride = Enum.GetValues(typeof(LevelWeatherType)).Cast<LevelWeatherType>().ToArray()[
-            random.Next(0, Enum.GetValues(typeof(LevelWeatherType)).Length)];
-
-        weeklyMoon.overrideWeatherType = weatherOverride;
-        weeklyMoon.currentWeather = weatherOverride;
-
-        return weeklyMoon;
+        return GetCustomMoon(moons, false);
     }
 }
