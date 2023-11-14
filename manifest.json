@@ -1,0 +1,7 @@
+{
+  "name": "MoonOfTheDay",
+  "version_number": "1.0.1",
+  "website_url": "https://github.com/MaxWasUnavailable/MoonOfTheDay",
+  "description": "A mod that adds daily & weekly seeded moons to the game.",
+  "dependencies": []
+}
