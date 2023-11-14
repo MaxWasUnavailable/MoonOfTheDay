@@ -3,7 +3,7 @@ using HarmonyLib;
 
 namespace MoonOfTheDay.Patches;
 
-public static class PatchStartOfRoundHelpers
+internal static class PatchStartOfRoundHelpers
 {
     public static bool IsVanillaMoon(SelectableLevel moon)
     {
@@ -21,7 +21,7 @@ public class PatchStartOfRound
         if (__instance.currentLevel == null) return;
         if (PatchStartOfRoundHelpers.IsVanillaMoon(__instance.currentLevel)) return;
         
-        Plugin.Logger.LogInfo($"Setting seed for {__instance.currentLevel.PlanetName}...");
+        Plugin.Logger.LogDebug($"Setting seed for {__instance.currentLevel.PlanetName}...");
         
         __instance.overrideRandomSeed = true;
         
