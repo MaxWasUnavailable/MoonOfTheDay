@@ -9,7 +9,7 @@ internal static class PatchTerminalHelpers
 {
     public static void AddTerminalCommand(ref Terminal terminal, SelectableLevel moonToAdd)
     {
-        Plugin.Logger.LogDebug($"Adding terminal command for {moonToAdd.name}...");
+        Plugin.Logger.LogDebug($"Adding terminal command for {moonToAdd.PlanetName}...");
 
         // Find the Confirm, Deny & Route TerminalKeywords
         var confirmKeyword = terminal.terminalNodes.allKeywords.First(keyword => keyword.name == "Confirm");
@@ -31,7 +31,7 @@ internal static class PatchTerminalHelpers
         var travelNode = ScriptableObject.CreateInstance<TerminalNode>();
         travelNode.name = GetTravelNodeNameForMoon(moonToAdd);
         travelNode.displayText =
-            "Routing autopilot to " + moonToAdd.name + ".\n\nPlease enjoy your flight.";
+            "Routing autopilot to " + moonToAdd.PlanetName + ".\n\nPlease enjoy your flight.";
         travelNode.clearPreviousText = true;
         travelNode.buyRerouteToMoon = moonToAdd.levelID;
 
@@ -64,9 +64,9 @@ internal static class PatchTerminalHelpers
         // Add the moon name to the Moons TerminalKeyword
         terminal.terminalNodes.allKeywords.First(keyword => keyword.name == "Moons").specialKeywordResult
                 .displayText +=
-            "* " + moonToAdd.name + " [planetTime]\n";
+            "* " + moonToAdd.PlanetName + " [planetTime]\n";
 
-        Plugin.Logger.LogDebug($"Added terminal command for {moonToAdd.name}.");
+        Plugin.Logger.LogDebug($"Added terminal command for {moonToAdd.PlanetName}.");
     }
 
     public static string GetKWNameForMoon(SelectableLevel moon)
