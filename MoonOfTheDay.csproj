@@ -21,15 +21,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Reference Include="Assembly-CSharp">
-            <HintPath>./Dependencies/Assembly-CSharp.dll</HintPath>
-        </Reference>
-        <Reference Include="UnityEngine">
-            <HintPath>./Dependencies/UnityEngine.dll</HintPath>
-        </Reference>
-        <Reference Include="Unity.TextMeshPro">
-            <HintPath>./Dependencies/Unit.TextMeshPro.dll</HintPath>
-        </Reference>
+        <Reference Include="Assembly-CSharp" HintPath="$(LC_REFERENCES)\Assembly-CSharp.dll" Private="False"/>
+        <Reference Include="Unity.TextMeshPro" HintPath="$(LC_REFERENCES)\Unity.TextMeshPro.dll" Private="False"/>
+        <Reference Include="UnityEngine" HintPath="$(LC_REFERENCES)\UnityEngine.dll" Private="False"/>
     </ItemGroup>
     
 
