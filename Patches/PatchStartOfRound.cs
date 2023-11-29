@@ -19,7 +19,11 @@ public class PatchStartOfRound
     public static void SetSeed(StartOfRound __instance)
     {
         if (__instance.currentLevel == null) return;
-        if (PatchStartOfRoundHelpers.IsVanillaMoon(__instance.currentLevel)) return;
+        if (PatchStartOfRoundHelpers.IsVanillaMoon(__instance.currentLevel))
+        {
+            Plugin.Logger.LogDebug($"Not setting seed for {__instance.currentLevel.PlanetName}...");
+            __instance.overrideRandomSeed = false;
+        }
         
         Plugin.Logger.LogDebug($"Setting seed for {__instance.currentLevel.PlanetName}...");
         
@@ -40,7 +44,7 @@ public class PatchStartOfRound
     [HarmonyPostfix]
     public static void InsertMoons(StartOfRound __instance)
     {
-        Plugin.Logger.LogInfo("Inserting moons in StartOfRound...");
+        Plugin.Logger.LogDebug("Inserting moons in StartOfRound...");
 
         var startOfRound = StartOfRound.Instance;
         
