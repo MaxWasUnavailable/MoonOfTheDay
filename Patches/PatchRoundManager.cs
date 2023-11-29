@@ -33,7 +33,7 @@ public class PatchRoundManager
 {
     [HarmonyPatch("GetRandomNavMeshPositionInRadiusSpherical")]
     [HarmonyPrefix]
-    public static bool GetRandomNavMeshPositionInRadiusSpherical(RoundManager __instance, ref Vector3 __result,
+    public static bool GetRandomNavMeshPositionInRadiusSpherical(ref RoundManager __instance, ref Vector3 __result,
         Vector3 pos, float radius = 10f,
         NavMeshHit navHit = default)
     {
@@ -44,7 +44,7 @@ public class PatchRoundManager
 
     [HarmonyPatch("GetRandomNavMeshPositionInRadius")]
     [HarmonyPrefix]
-    public static bool GetRandomNavMeshPositionInRadius(RoundManager __instance, ref Vector3 __result, Vector3 pos,
+    public static bool GetRandomNavMeshPositionInRadius(ref RoundManager __instance, ref Vector3 __result, Vector3 pos,
         float radius = 10f,
         NavMeshHit navHit = default)
     {
