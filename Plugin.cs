@@ -92,7 +92,7 @@ public class Plugin : BaseUnityPlugin
 
         HighestLevelID = moons.Max(moon => moon.levelID);
 
-        Logger.LogInfo($"Highest vanilla level ID is {HighestLevelID}");
+        Logger.LogDebug($"Highest vanilla level ID is {HighestLevelID}");
     }
 
     private static SelectableLevel GetCustomMoon(SelectableLevel[] moons, bool isDailyElseWeekly = true)
