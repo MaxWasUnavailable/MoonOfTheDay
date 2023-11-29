@@ -7,7 +7,7 @@ internal static class PatchStartOfRoundHelpers
 {
     public static bool IsVanillaMoon(SelectableLevel moon)
     {
-        return !new [] {Plugin.DailyMoonName, Plugin.WeeklyMoonName}.Contains(moon.PlanetName);
+        return !new[] { Plugin.DailyMoonName, Plugin.WeeklyMoonName }.Contains(moon.PlanetName);
     }
 }
 
@@ -23,12 +23,13 @@ public class PatchStartOfRound
         {
             Plugin.Logger.LogDebug($"Not setting seed for {__instance.currentLevel.PlanetName}...");
             __instance.overrideRandomSeed = false;
+            return;
         }
-        
+
         Plugin.Logger.LogDebug($"Setting seed for {__instance.currentLevel.PlanetName}...");
-        
+
         __instance.overrideRandomSeed = true;
-        
+
         switch (__instance.currentLevel.PlanetName)
         {
             case Plugin.DailyMoonName:
@@ -39,7 +40,7 @@ public class PatchStartOfRound
                 break;
         }
     }
-    
+
     [HarmonyPatch("Awake")]
     [HarmonyPostfix]
     public static void InsertMoons(StartOfRound __instance)
@@ -47,9 +48,9 @@ public class PatchStartOfRound
         Plugin.Logger.LogDebug("Inserting moons in StartOfRound...");
 
         var startOfRound = StartOfRound.Instance;
-        
+
         var levelList = startOfRound.levels.ToList();
-        
+
         var dailyMoon = Plugin.GetDailyMoon(startOfRound.levels);
         var weeklyMoon = Plugin.GetWeeklyMoon(startOfRound.levels);
 
