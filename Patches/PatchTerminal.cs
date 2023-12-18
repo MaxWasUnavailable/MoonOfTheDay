@@ -37,7 +37,7 @@ internal static class PatchTerminalHelpers
 
         // Create TerminalNode for decision to travel to moon
         var travelDecisionNode = ScriptableObject.CreateInstance<TerminalNode>();
-        travelDecisionNode.name = Plugin.DailyMoonName;
+        travelDecisionNode.name = GetKWNameForMoon(moonToAdd);
         travelDecisionNode.displayText =
             "The company has detected a rogue planet. It might not be available for long. Do you want to go there?\n\nIt is currently [currentPlanetTime] on this moon.\n\nPlease CONFIRM or DENY.\n\n";
         travelDecisionNode.clearPreviousText = true;
